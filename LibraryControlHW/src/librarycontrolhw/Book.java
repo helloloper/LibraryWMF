@@ -1,14 +1,15 @@
 package librarycontrolhw;
 public class Book {
    
-    private String name;
+    private String bName;
     private String author;
     private int id;
     private boolean isAvailable;
     private int borrowCount;
+    private int howManyisThere;
 
     public Book(String name, String author, int id) {
-        this.name = name;
+        this.bName = name;
         this.author = author;
         this.id = id;
       this.isAvailable=true;
@@ -16,12 +17,12 @@ public class Book {
     
     }
 
-    public String getName() {
-        return name;
+    public String getbName() {
+        return bName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setbName(String name) {
+        this.bName = name;
     }
 
     public String getAuthor() {
