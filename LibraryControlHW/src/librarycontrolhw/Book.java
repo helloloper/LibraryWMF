@@ -56,6 +56,14 @@ public class Book {
     public void setBorrowCount(int borrowCount) {
         this.borrowCount = borrowCount;
     }
+
+    public int getHowManyisThere() {
+        return howManyisThere;
+    }
+
+    public void setHowManyisThere(int howManyisThere) {
+        this.howManyisThere = howManyisThere;
+    }
     
     
 }
