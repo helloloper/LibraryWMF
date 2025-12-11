@@ -1,11 +1,11 @@
 package librarycontrolhw;
 
-public class bstNode {
-    bstNode left;
-    bstNode right;
-    Book data;
+public class bstNode<T> {
+    bstNode<T> left;
+    bstNode<T> right;
+    T data;
 
-    public bstNode(Book data) {
+    public bstNode(T data) {
         this.data = data;
     }
     

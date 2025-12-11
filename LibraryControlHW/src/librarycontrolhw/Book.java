@@ -1,5 +1,5 @@
 package librarycontrolhw;
-public class Book {
+public class Book implements Comparable<Book>{
    
     private String bName;
     private String author;
@@ -64,6 +64,12 @@ public class Book {
     public void setHowManyisThere(int howManyisThere) {
         this.howManyisThere = howManyisThere;
     }
+     public int compareTo(Book other) {//this method for override Comparable class so we use it
+        return this.bName.compareTo(other.bName);
+    }
+     public String toString() {//this method also for override to return object's name
+    return getbName();  
+}
     
     
 }

@@ -20,10 +20,12 @@ public class LibraryControlHW {
                            """);//
         GenerallibManager generalManager = new GenerallibManager();
         Hashtable<Integer, Book> table = generalManager.generateBooks();
-        BSTree bst = generalManager.getBstT();
+        Hashtable<Integer,Member > table2 = generalManager.generateMembers();
+        BSTree bstForBooks = generalManager.getBstT();
+        BSTree bstForMembers = generalManager.getBstMembers();
         
         Book b = table.get(12);
-        System.out.println("book name:" + b.getbName());
+        System.out.println("we found the book, name:" + b.getbName());
         BookLinkedList bLL = new BookLinkedList();
         bLL.add(1);
         bLL.add(5);
@@ -32,7 +34,10 @@ public class LibraryControlHW {
         bLL.add(8);
         bLL.add(9);
         bLL.seeList();
-        bst.seeTree();
+        bstForBooks.seeTree();
+        bstForMembers.seeTree();
+        
+        
    
 
     }

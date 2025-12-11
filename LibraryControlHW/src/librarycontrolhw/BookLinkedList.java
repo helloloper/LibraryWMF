@@ -38,7 +38,7 @@ public class BookLinkedList<T> {
         System.out.println("sorry but there is no books yaani");
     }
     else{
-        Node temp = head;
+        Node<T> temp = head;
     while(temp.next!=null){
         System.out.println(temp.data);
         temp=temp.next;

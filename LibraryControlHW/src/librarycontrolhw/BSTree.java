@@ -1,24 +1,24 @@
 package librarycontrolhw;
 
-public class BSTree {
+public class BSTree <T extends Comparable<T>> {
 
-    private bstNode root;
+    private bstNode<T> root;
 
-    public void insert(Book book) {
-        root = insertRec(root, book);
+    public void insert(T value) {
+        root = insertRec(root, value);
     }
 
-    private bstNode insertRec(bstNode root, Book book) {
+    private bstNode<T> insertRec(bstNode<T> root, T value) {
         
         if (root == null) {
-            bstNode newNode = new bstNode(book);
+            bstNode newNode = new bstNode<>(value);
             return newNode;
             
-        } else if (book.getbName().compareTo(root.data.getbName()) > 0) {
+        } else if (value.compareTo(root.data) > 0) {
             
-           root.right= insertRec(root.right, book);
+           root.right= insertRec(root.right, value);
         } else {
-           root.left= insertRec(root.left, book);
+           root.left= insertRec(root.left, value);
         }
     
     return root;}
@@ -33,12 +33,12 @@ public class BSTree {
         
     }
 
-    public void inorderRec(bstNode node) {
+    public void inorderRec(bstNode<T> node) {
         if (node == null) {
             return;
         }
             inorderRec(node.left);
-            System.out.println(node.data.getbName());
+            System.out.println(node.data);
             inorderRec(node.right);
         }
         
