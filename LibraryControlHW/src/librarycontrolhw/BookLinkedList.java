@@ -35,7 +35,7 @@ public class BookLinkedList<T> {
     
     public void seeList(){
     if(head==null){
-        System.out.println("sorry but there is no books yaani");
+        System.out.println("sorry but there is no book yaani");
     }
     else{
         Node<T> temp = head;

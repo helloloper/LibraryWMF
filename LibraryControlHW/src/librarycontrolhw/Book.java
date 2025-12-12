@@ -68,7 +68,7 @@ public class Book implements Comparable<Book>{
         return this.bName.compareTo(other.bName);
     }
      public String toString() {//this method also for override to return object's name
-    return getbName();  
+    return getbName() + "id"+getId();  
 }
     
     

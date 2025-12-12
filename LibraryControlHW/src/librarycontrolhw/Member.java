@@ -4,7 +4,7 @@ public class Member implements Comparable<Member>{
     private String name;
     private String surName;
     private int id;
-    private BookLinkedList borrowedBooks;
+    private BookLinkedList borrowedBooks = new BookLinkedList();
 
     public Member(String name, String surName, int id) {
         this.name = name;
@@ -47,7 +47,7 @@ public class Member implements Comparable<Member>{
         return this.name.compareTo(other.name);
     }
     public String toString() {
-    return getName();  // sadece kitap adını döndür
+    return getName() + "id:" + getId();  // sadece kitap adını döndür
 }
 
 }
