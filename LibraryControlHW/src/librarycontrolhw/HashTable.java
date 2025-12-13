@@ -2,6 +2,9 @@ public class HashTable<K, V> {
     private NodeHash<K, V>[] table;
     private int size;
 
+    public HashTable() {
+        this(10);
+    }
 
     public HashTable(int size) {
         this.size = size;
@@ -29,6 +32,31 @@ public class HashTable<K, V> {
         prev.next = new NodeHash<>(key, value);
     }
 
+    public void remove(K key) {
+        int index = key.hashCode() % size;
+
+        NodeHash<K, V> current = table[index];
+        NodeHash<K, V> prev = null;
+
+        while (current != null) {
+            
+            if (current.key.equals(key)) {
+
+                if (prev == null) {
+                    table[index] = current.next;
+                }
+
+                else {
+                    prev.next = current.next;
+                }
+                return;
+            }
+
+            prev = current;
+            current = current.next;
+        }
+    }
+
     public V get(K key) {
         int index = key.hashCode() % size;
         NodeHash<K, V> current = table[index];
@@ -40,6 +68,7 @@ public class HashTable<K, V> {
         }
         return null;
     }
+
 }
 
 class NodeHash<K, V> {
