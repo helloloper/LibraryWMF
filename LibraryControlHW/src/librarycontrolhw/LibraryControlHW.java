@@ -1,10 +1,13 @@
 package librarycontrolhw;
 
 import java.util.Hashtable;
+
 import java.util.Scanner;
 
 public class LibraryControlHW {
-
+/*
+    WE USED SCHOOL NUMBER FOR BOOKS AND MEMBERS;
+    */
     public static void main(String[] args) {
         GenerallibManager generalManager = new GenerallibManager();
         generalManager.generateBooks();//to create books just for this program
@@ -17,14 +20,14 @@ public class LibraryControlHW {
                            1:||kitap ekle  ||
                            2:||uye ekle    ||   
                            3:||odunc al    ||
-                           4:||geri teslim || //isAvalabşe true
+                           4:||geri teslim ||
                            5:kitap arama  bst çalıştıırır filtreleme yapılır mı allah bilir ,, id den ararsan hash ile bulursubn
                            6:popüler kitaplar heap e priority ekleme
                            7:undo acyion ları stack den alır
                            8:kitabın beklerlerini gösterecek queue den
-                         9: tüm kitapları gösterir in order
-                         10:tüm üyeleri gösterir in order
-                         11:kullanıcının ödünç aldığı listeyi görebilme
+                           9:||tum kitaplari gosterir in order||
+                          10:||tum uyeleri gosterir in order
+                          11:||kullanicinin odunc aldıgı listeyi görebilme||
                            0:çikiç
                            """);//1  (hash map ve bst ye ekleyecek) 2 aynı şekil || 3 
             //hash maptan kitapın isAvailable false,, popüler kitaplara +1 puanvis,,, available ffalssa bekleme listesine
@@ -48,6 +51,10 @@ public class LibraryControlHW {
                     scn.nextLine();
                     generalManager.borrowBook(generalManager.getAllMembers().get(memberId));
                     break;
+                case 4:System.out.println("whats ur id:");
+                    int id = scn.nextInt();scn.nextLine();
+                    Member borrowedMember = generalManager.getAllMembers().get(id);
+                    generalManager.returnBook(borrowedMember);break;
                 case 9:
                     bstForBooks.seeTree();
                     break;
