@@ -56,6 +56,9 @@ public class LibraryControlHW {
                     Member borrowedMember = generalManager.getAllMembers().get(id);
                     generalManager.returnBook(borrowedMember);
                     break;
+                case 6:
+                    generalManager.showMostPopularBooks(); // Popüler kitaplar kullanıcıya sunulmaktadır
+                    break;
                 case 8: generalManager.showWaitList(); 
                     break;
                 case 9:
