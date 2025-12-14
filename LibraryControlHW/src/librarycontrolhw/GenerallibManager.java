@@ -12,6 +12,7 @@ public class GenerallibManager {
     private BSTree<Book> bstT = new BSTree<>();
     private BSTree<Member> bstMembers = new BSTree<>();
     private ArrayList<Book> popularsList = new ArrayList<>(); //En çok ödünç alınan kitapları tutmak içindir
+    private Stack<String> undoStack = new Stack<>(); // undo işlemi için field
    // private Hashtable<Integer, Book> allBooks = new Hashtable<Integer, Book>();
    // private Hashtable<Integer, Member> allMembers = new Hashtable<>();
 
@@ -84,6 +85,9 @@ public class GenerallibManager {
         getBstT().insert(newBook);
         System.out.println("boook added succesfully");
         popularsList.add(newBook);//Yeni kitapı popülerler arasına eklemek üzerine çalışır
+        undoStack.push("ADD_BOOK: " + id); // undo
+        // undo işlemleri bu şekilde yazılıyormuş ondan böyle yazdım
+        
     }
 
     public void borrowBook(Member whoBorrow) {
@@ -102,6 +106,8 @@ public class GenerallibManager {
                     // waitlist için gerekli değişiklikler
                     book.setBorrowCount(book.getBorrowCount() + 1);
                     System.out.println("basarili odunc almak");
+                    // undo için gerekli değişiklikler
+                    undoStack.push("BORROW_BOOK: " + whoBorrow.getId() + ":" + book.getId());
                 } else {
                     // waitlist için gerekli değişiklikler
                     book.getWaitList().enqueue(whoBorrow);
@@ -181,6 +187,46 @@ public class GenerallibManager {
             System.out.println("----------------------");
         } else {
             System.out.println("wrong id");
+        }
+    }
+
+    // undoing action method
+    public void undoLastAction() {
+        String action = undoStack.pop();
+
+        if(action == null) {
+            System.out.println("no action.");
+            return;
+        }
+
+        String[] parts = action.split(":");
+        String actionType = parts[0];
+        int id = Integer.parseInt(parts[1]);
+
+        switch (actionType) {
+            case "ADD_BOOK" :
+                getAllBooks().remove(id);
+                System.out.println("successful");
+                break;
+            case "ADD_MEMBER" :
+                getAllMembers().remove(id);
+                System.out.println("successful");
+                break;
+            case "BORROW_BOOK" :
+                int bookId = Integer.parseInt(parts[2]);
+                Member member = getAllMembers().get(id);
+                Book book = getAllBooks().get(bookId);
+                if(member != null && book != null) {
+                    member.getBorrowedBooks().remove(book);
+                    book.setIsAvailable(true);
+                    if (book.getBorrowCount() > 0) {
+                        book.setBorrowCount(book.getBorrowCount() - 1);
+                    }
+                    System.out.println("successful");
+                }
+                break;
+            default:
+                System.out.println("hacı böyle bi işlem geri alınamıyo");
         }
     }
     
