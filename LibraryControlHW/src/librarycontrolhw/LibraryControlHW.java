@@ -24,7 +24,7 @@ public class LibraryControlHW {
                            5:kitap arama  bst çalıştıırır filtreleme yapılır mı allah bilir ,, id den ararsan hash ile bulursubn
                            6:popüler kitaplar heap e priority ekleme
                            7:undo acyion ları stack den alır
-                           8:kitabın beklerlerini gösterecek queue den
+                           8:|| waitlist (made by ozkancoding) ||
                            9:||tum kitaplari gosterir in order||
                           10:||tum uyeleri gosterir in order
                           11:||kullanicinin odunc aldıgı listeyi görebilme||
@@ -54,7 +54,10 @@ public class LibraryControlHW {
                 case 4:System.out.println("whats ur id:");
                     int id = scn.nextInt();scn.nextLine();
                     Member borrowedMember = generalManager.getAllMembers().get(id);
-                    generalManager.returnBook(borrowedMember);break;
+                    generalManager.returnBook(borrowedMember);
+                    break;
+                case 8: generalManager.showWaitList(); 
+                    break;
                 case 9:
                     bstForBooks.seeTree();
                     break;
