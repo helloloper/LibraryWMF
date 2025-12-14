@@ -2,6 +2,7 @@ package librarycontrolhw;
 
 import com.sun.source.tree.BinaryTree;
 //import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class GenerallibManager {
     HashTable <Integer, Member> allMembers = new HashTable<Integer,Member>();
     private BSTree<Book> bstT = new BSTree<>();
     private BSTree<Member> bstMembers = new BSTree<>();
+    private ArrayList<Book> popularsList = new ArrayList<>(); //En çok ödünç alınan kitapları tutmak içindir
    // private Hashtable<Integer, Book> allBooks = new Hashtable<Integer, Book>();
    // private Hashtable<Integer, Member> allMembers = new Hashtable<>();
 
@@ -26,6 +28,7 @@ public class GenerallibManager {
             Book book = new Book(bName, author, id);
             getAllBooks().put(book.getId(), book);
             getBstT().insert(book);
+            popularsList.add(book); //Popüler kitap listesine eklemektedir
             
         }
         System.out.println("books are exist");
@@ -80,6 +83,7 @@ public class GenerallibManager {
         getAllBooks().put(id, newBook);
         getBstT().insert(newBook);
         System.out.println("boook added succesfully");
+        popularsList.add(newBook);//Yeni kitapı popülerler arasına eklemek üzerine çalışır
     }
 
     public void borrowBook(Member whoBorrow) {
@@ -107,6 +111,36 @@ public class GenerallibManager {
 
         } else {
             System.out.println("invalid member id");
+        }
+    }
+  
+    public void showMostPopularBooks() { //popüler kitaplar için metod
+        if (popularsList.isEmpty()) {
+            System.out.println("There are no books in the system");
+            return;
+        }
+        System.out.println("\n--- Most Popular Books ---");
+        BookHeap tempHeap = new BookHeap();
+        int addedCount=0;
+        for (Book b : popularsList) {
+            if (b.getBorrowCount() > 0) {
+                tempHeap.add(b);
+                addedCount++;
+            }
+        }
+        if (addedCount==0){
+            System.out.println(" There aren't any books borrowed from the library");
+            return;
+        }
+        int count = 1;
+        while (true) {
+            Book topBook = tempHeap.removeTop();
+            if (topBook == null) break;
+
+            System.out.println(count + ". " + topBook.getbName() +
+                    " | Author: " + topBook.getAuthor() +
+                    " | Borrow Count: " + topBook.getBorrowCount());
+            count++;
         }
     }
 
