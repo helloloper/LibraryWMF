@@ -68,6 +68,8 @@ public class GenerallibManager {
         getAllMembers().put(id, nMember); //to add new member in hashtable
         
         System.out.println("member added succesfully");
+
+        undoStack.push("ADD_MEMBER: " + id); // undo
         
     }
 
