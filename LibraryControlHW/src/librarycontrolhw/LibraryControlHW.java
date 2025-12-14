@@ -22,8 +22,8 @@ public class LibraryControlHW {
                            3:||odunc al    ||
                            4:||geri teslim ||
                            5:kitap arama  bst çalıştıırır filtreleme yapılır mı allah bilir ,, id den ararsan hash ile bulursubn
-                           6:popüler kitaplar heap e priority ekleme
-                           7:undo acyion ları stack den alır
+                           6:|| heap ile popular list (enes enayisi burayı değiştirmeyi unutmus) ||
+                           7:|| undo (halledilmiştir by ozkancoding ||
                            8:|| waitlist (made by ozkancoding) ||
                            9:||tum kitaplari gosterir in order||
                           10:||tum uyeleri gosterir in order
@@ -59,7 +59,11 @@ public class LibraryControlHW {
                 case 6:
                     generalManager.showMostPopularBooks(); // Popüler kitaplar kullanıcıya sunulmaktadır
                     break;
-                case 8: generalManager.showWaitList(); 
+                case 7: 
+                    generalManager.undoLastAction(); // undoingggggg
+                    break;    
+                case 8: 
+                    generalManager.showWaitList(); // waitlisttttttt
                     break;
                 case 9:
                     bstForBooks.seeTree();
