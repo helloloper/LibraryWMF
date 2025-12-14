@@ -127,6 +127,24 @@ public class GenerallibManager {
         else{System.out.println("there is no boooookkkkkkkkkkk");}
         whoBorrow.getBorrowedBooks().remove(whoBorrow.getBorrowedBooks().getBook(bookId));
     }
+
+    // waitlist yazdıran metod
+    public void showWaitList() {
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Enter a book id that you want to see the waitlist : ");
+        int bookId = scn.nextInt();
+        scn.nextLine();
+
+        Book book = getAllBooks().get(bookId);
+
+        if(book != null) {
+            System.out.println("Name : " + book.getbName() +" ID : " + bookId + " --- waitlist  ----->   " );
+            book.getWaitList().printQueue();
+            System.out.println("----------------------");
+        } else {
+            System.out.println("wrong id");
+        }
+    }
     
     public BSTree<Book> getBstT() {
         return bstT;
