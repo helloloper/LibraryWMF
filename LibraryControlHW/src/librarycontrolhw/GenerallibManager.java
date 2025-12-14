@@ -95,12 +95,16 @@ public class GenerallibManager {
                 if (book.isIsAvailable()) {
                     whoBorrow.getBorrowedBooks().add(book);
                     book.setIsAvailable(false);
+                    // waitlist için gerekli değişiklikler
+                    book.setBorrowCount(book.getBorrowCount() + 1);
                     System.out.println("basarili odunc almak");
                 } else {
-                    System.out.println("listeye eklendin");
+                    // waitlist için gerekli değişiklikler
+                    book.getWaitList().enqueue(whoBorrow);
+                    System.out.println(whoBorrow.getName() + " listeye alındı.");
                 }
             }
-            
+
         } else {
             System.out.println("invalid member id");
         }
