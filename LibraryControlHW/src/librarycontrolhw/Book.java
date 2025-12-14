@@ -70,6 +70,12 @@ public class Book implements Comparable<Book>{
      public String toString() {//this method also for override to return object's name
     return getbName() + "id"+getId();  
 }
+
+   private Queue<Member> waitList = new Queue<>();
+
+    public Queue<Member> getWaitList() {
+        return waitList;
+    }
     
     
 }
