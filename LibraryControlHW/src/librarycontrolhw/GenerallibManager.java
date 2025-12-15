@@ -11,7 +11,7 @@ public class GenerallibManager {
     HashTable <Integer, Member> allMembers = new HashTable<Integer,Member>();
     private BSTree<Book> bstT = new BSTree<>();
     private BSTree<Member> bstMembers = new BSTree<>();
-    private ArrayList<Book> popularsList = new ArrayList<>(); //En çok ödünç alınan kitapları tutmak içindir
+    private ArrayList<Book> masterBookList = new ArrayList<>(); //En çok ödünç alınan kitapları falan tutmak içindir
     private Stack<String> undoStack = new Stack<>(); // undo işlemi için field
    // private Hashtable<Integer, Book> allBooks = new Hashtable<Integer, Book>();
    // private Hashtable<Integer, Member> allMembers = new Hashtable<>();
@@ -29,7 +29,7 @@ public class GenerallibManager {
             Book book = new Book(bName, author, id);
             getAllBooks().put(book.getId(), book);
             getBstT().insert(book);
-            popularsList.add(book); //Popüler kitap listesine eklemektedir
+            masterBookList.add(book); //Popüler kitap listesine eklemektedir
             
         }
         System.out.println("books are exist");
@@ -86,7 +86,7 @@ public class GenerallibManager {
         getAllBooks().put(id, newBook);
         getBstT().insert(newBook);
         System.out.println("boook added succesfully");
-        popularsList.add(newBook);//Yeni kitapı popülerler arasına eklemek üzerine çalışır
+        masterBookList.add(newBook);//Yeni kitapı popülerler arasına eklemek üzerine çalışır
         undoStack.push("ADD_BOOK: " + id); // undo
         // undo işlemleri bu şekilde yazılıyormuş ondan böyle yazdım
         
@@ -123,14 +123,14 @@ public class GenerallibManager {
     }
   
     public void showMostPopularBooks() { //popüler kitaplar için metod
-        if (popularsList.isEmpty()) {
+        if (masterBookList.isEmpty()) {
             System.out.println("There are no books in the system");
             return;
         }
         System.out.println("\n--- Most Popular Books ---");
         BookHeap tempHeap = new BookHeap();
         int addedCount=0;
-        for (Book b : popularsList) {
+        for (Book b : masterBookList) {
             if (b.getBorrowCount() > 0) {
                 tempHeap.add(b);
                 addedCount++;
@@ -263,5 +263,33 @@ public class GenerallibManager {
     public void setAllMembers(HashTable<Integer, Member> allMembers) {
         this.allMembers = allMembers;
     }
-    
-}
+    public void searchBookByID(int id) {
+        Book foundBook = allBooks.get(id);
+
+        if (foundBook != null) {
+            System.out.println(foundBook.toString());
+        } else {
+            System.out.println("The book cannot found with that id");
+        }
+    }
+     public void searchBookByName(String name) {
+        boolean found = false;
+        System.out.println("Searching results for" + name);
+        for (Book b : masterBookList) {
+            if (b.getbName().toLowerCase().contains(name.toLowerCase())) {
+                System.out.println(b.toString());
+                found = true;
+            }
+            if (!found) System.out.println("The book with that name doesn't exist");
+        }
+    }
+    public void searchBookByAuthor (String author){
+        boolean found= false;
+        System.out.println("The books for author " +author);
+        for (Book b : masterBookList){
+            if (b.getAuthor().toLowerCase().contains(author.toLowerCase())){
+                System.out.println(b.toString());
+                found = true;
+            }if (!found) System.out.println("The book with that author doesn't exist");
+        }
+    }
