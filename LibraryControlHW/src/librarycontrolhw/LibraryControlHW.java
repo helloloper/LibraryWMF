@@ -56,6 +56,28 @@ public class LibraryControlHW {
                     Member borrowedMember = generalManager.getAllMembers().get(id);
                     generalManager.returnBook(borrowedMember);
                     break;
+                 case 5:
+                    System.out.println("How do you want to search book");
+                    System.out.println("1: to search by id");
+                    System.out.println("2: to search by name");
+                    System.out.println("3: to search by author");
+                    int searchChoice = scn.nextInt();
+                    if (searchChoice == 1) {
+                        System.out.println("Enter the id");
+                        int searchId = scn.nextInt();
+                        scn.nextLine();
+                        generalManager.searchBookByID(searchId);
+                    } else if (searchChoice == 2) {
+                        System.out.println("Enter the name");
+                        String searchName = scn.nextLine();
+                        generalManager.searchBookByName(searchName);
+                    } else if (searchChoice == 3) {
+                        System.out.println("Enter the author's name");
+                        String searchAuthor = scn.nextLine();
+                        generalManager.searchBookByAuthor(searchAuthor);
+                    }else System.out.println("Invalid choice");
+
+                    break;    
                 case 6:
                     generalManager.showMostPopularBooks(); // Popüler kitaplar kullanıcıya sunulmaktadır
                     break;
