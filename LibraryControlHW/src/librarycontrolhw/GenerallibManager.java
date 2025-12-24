@@ -7,21 +7,21 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GenerallibManager {
-    HashTable <Integer, Book> allBooks = new HashTable<Integer,Book>();
-    HashTable <Integer, Member> allMembers = new HashTable<Integer,Member>();
+    HashTable<Integer, Book> allBooks = new HashTable<Integer, Book>();
+    HashTable<Integer, Member> allMembers = new HashTable<Integer, Member>();
     private BSTree<Book> bstT = new BSTree<>();
     private BSTree<Member> bstMembers = new BSTree<>();
     private ArrayList<Book> masterBookList = new ArrayList<>(); //En çok ödünç alınan kitapları falan tutmak içindir
     private Stack<String> undoStack = new Stack<>(); // undo işlemi için field
-   // private Hashtable<Integer, Book> allBooks = new Hashtable<Integer, Book>();
-   // private Hashtable<Integer, Member> allMembers = new Hashtable<>();
+    // private Hashtable<Integer, Book> allBooks = new Hashtable<Integer, Book>();
+    // private Hashtable<Integer, Member> allMembers = new Hashtable<>();
 
     public void generateBooks() {
         Random rnd = new Random(230316067);
         Random rnd1 = new Random(230316067);
-        
+
         for (int i = 0; i < 10; i++) {
-            
+
             String bName = "book" + rnd.nextInt(1000);
             String author = "kapak1" + rnd.nextInt(1000);
             int id = rnd1.nextInt(500);
@@ -30,16 +30,16 @@ public class GenerallibManager {
             getAllBooks().put(book.getId(), book);
             getBstT().insert(book);
             masterBookList.add(book); //Popüler kitap listesine eklemektedir
-            
+
         }
         System.out.println("books are exist");
-        
-    }    
+
+    }
 
     public void generateMembers() {
         Random rnd = new Random(230316067);
         Random rnd2 = new Random(230316067);
-        
+
         for (int i = 0; i < 10; i++) {
             String mName = "member" + rnd.nextInt(500);
             String surName = "lastNameM" + rnd.nextInt(1000);
@@ -51,7 +51,7 @@ public class GenerallibManager {
             getBstMembers().insert(newMember);
         }
         System.out.println("members are exist");
-        
+
     }
 
     public void addMember() {
@@ -66,11 +66,11 @@ public class GenerallibManager {
         Member nMember = new Member(name, surName, id);
         getBstMembers().insert(nMember);//to insert onto bst for all members
         getAllMembers().put(id, nMember); //to add new member in hashtable
-        
+
         System.out.println("member added succesfully");
 
         undoStack.push("ADD_MEMBER: " + id); // undo
-        
+
     }
 
     public void addBook() {
@@ -89,7 +89,7 @@ public class GenerallibManager {
         masterBookList.add(newBook);//Yeni kitapı popülerler arasına eklemek üzerine çalışır
         undoStack.push("ADD_BOOK: " + id); // undo
         // undo işlemleri bu şekilde yazılıyormuş ondan böyle yazdım
-        
+
     }
 
     public void borrowBook(Member whoBorrow) {
@@ -121,7 +121,7 @@ public class GenerallibManager {
             System.out.println("invalid member id");
         }
     }
-  
+
     public void showMostPopularBooks() { //popüler kitaplar için metod
         if (masterBookList.isEmpty()) {
             System.out.println("There are no books in the system");
@@ -129,14 +129,14 @@ public class GenerallibManager {
         }
         System.out.println("\n--- Most Popular Books ---");
         BookHeap tempHeap = new BookHeap();
-        int addedCount=0;
+        int addedCount = 0;
         for (Book b : masterBookList) {
             if (b.getBorrowCount() > 0) {
                 tempHeap.add(b);
                 addedCount++;
             }
         }
-        if (addedCount==0){
+        if (addedCount == 0) {
             System.out.println(" There aren't any books borrowed from the library");
             return;
         }
@@ -167,10 +167,13 @@ public class GenerallibManager {
         System.out.println("u borrowed that books:");
         whoBorrow.getBorrowedBooks().seeList();
         System.out.println("enter which u remove");
-        int bookId = scn.nextInt();scn.nextLine();
-        if(whoBorrow.getBorrowedBooks().getBook(bookId)!=null){
-        whoBorrow.getBorrowedBooks().getBook(bookId).setIsAvailable(true);}
-        else{System.out.println("there is no boooookkkkkkkkkkk");}
+        int bookId = scn.nextInt();
+        scn.nextLine();
+        if (whoBorrow.getBorrowedBooks().getBook(bookId) != null) {
+            whoBorrow.getBorrowedBooks().getBook(bookId).setIsAvailable(true);
+        } else {
+            System.out.println("there is no boooookkkkkkkkkkk");
+        }
         whoBorrow.getBorrowedBooks().remove(whoBorrow.getBorrowedBooks().getBook(bookId));
     }
 
@@ -183,8 +186,8 @@ public class GenerallibManager {
 
         Book book = getAllBooks().get(bookId);
 
-        if(book != null) {
-            System.out.println("Name : " + book.getbName() +" ID : " + bookId + " --- waitlist  ----->   " );
+        if (book != null) {
+            System.out.println("Name : " + book.getbName() + " ID : " + bookId + " --- waitlist  ----->   ");
             book.getWaitList().printQueue();
             System.out.println("----------------------");
         } else {
@@ -196,7 +199,7 @@ public class GenerallibManager {
     public void undoLastAction() {
         String action = undoStack.pop();
 
-        if(action == null) {
+        if (action == null) {
             System.out.println("no action.");
             return;
         }
@@ -206,19 +209,19 @@ public class GenerallibManager {
         int id = Integer.parseInt(parts[1]);
 
         switch (actionType) {
-            case "ADD_BOOK" :
+            case "ADD_BOOK":
                 getAllBooks().remove(id);
                 System.out.println("successful");
                 break;
-            case "ADD_MEMBER" :
+            case "ADD_MEMBER":
                 getAllMembers().remove(id);
                 System.out.println("successful");
                 break;
-            case "BORROW_BOOK" :
+            case "BORROW_BOOK":
                 int bookId = Integer.parseInt(parts[2]);
                 Member member = getAllMembers().get(id);
                 Book book = getAllBooks().get(bookId);
-                if(member != null && book != null) {
+                if (member != null && book != null) {
                     member.getBorrowedBooks().remove(book);
                     book.setIsAvailable(true);
                     if (book.getBorrowCount() > 0) {
@@ -231,38 +234,39 @@ public class GenerallibManager {
                 System.out.println("hacı böyle bi işlem geri alınamıyo");
         }
     }
-    
+
     public BSTree<Book> getBstT() {
         return bstT;
     }
-    
+
     public void setBstT(BSTree bstT) {
         this.bstT = bstT;
     }
-    
+
     public BSTree<Member> getBstMembers() {
         return bstMembers;
     }
-    
+
     public void setBstMembers(BSTree bstMembers) {
         this.bstMembers = bstMembers;
     }
-    
+
     public HashTable<Integer, Book> getAllBooks() {
         return allBooks;
     }
-    
+
     public void setAllBooks(HashTable<Integer, Book> allBooks) {
         this.allBooks = allBooks;
     }
-    
+
     public HashTable<Integer, Member> getAllMembers() {
         return allMembers;
     }
-    
+
     public void setAllMembers(HashTable<Integer, Member> allMembers) {
         this.allMembers = allMembers;
     }
+
     public void searchBookByID(int id) {
         Book foundBook = allBooks.get(id);
 
@@ -272,7 +276,8 @@ public class GenerallibManager {
             System.out.println("The book cannot found with that id");
         }
     }
-     public void searchBookByName(String name) {
+
+    public void searchBookByName(String name) {
         boolean found = false;
         System.out.println("Searching results for" + name);
         for (Book b : masterBookList) {
@@ -283,13 +288,16 @@ public class GenerallibManager {
             if (!found) System.out.println("The book with that name doesn't exist");
         }
     }
-    public void searchBookByAuthor (String author){
-        boolean found= false;
-        System.out.println("The books for author " +author);
-        for (Book b : masterBookList){
-            if (b.getAuthor().toLowerCase().contains(author.toLowerCase())){
+
+    public void searchBookByAuthor(String author) {
+        boolean found = false;
+        System.out.println("The books for author " + author);
+        for (Book b : masterBookList) {
+            if (b.getAuthor().toLowerCase().contains(author.toLowerCase())) {
                 System.out.println(b.toString());
                 found = true;
-            }if (!found) System.out.println("The book with that author doesn't exist");
+            }
+            if (!found) System.out.println("The book with that author doesn't exist");
         }
     }
+}
